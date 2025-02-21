@@ -28,7 +28,7 @@ In Google Colab, clone and run as follows:
 !git clone https://github.com/yourusername/documentation-harvester.git
 %cd documentation-harvester
 !pip install -r requirements.txt
-!python scripts/run_once.py  # or run_scheduler.py for periodic harvesting
+!python run_once.py  # or run_scheduler.py for periodic harvesting
 ```
 
 ## Database Schema
