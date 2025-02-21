@@ -67,7 +67,7 @@ Edit the `config.yaml` file to adjust API endpoints, crawl settings, logging lev
 In a Colab notebook, run the following commands to clone and run the repository:
 
 ```python
-!git clone https://github.com/yourusername/documentation-harvester.git
+!git clone https://github.com/rohinmanvi/documentation-harvester.git
 %cd documentation-harvester
 !pip install -r requirements.txt
 !python scripts/run_once.py  # or use run_scheduler.py for periodic execution
