@@ -1,8 +1,3 @@
-Below is a revised, concise README that meets your requirements:
-
----
-
-```markdown
 # Documentation Harvester
 
 ## Overview
