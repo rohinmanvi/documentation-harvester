@@ -40,6 +40,7 @@ def initialize_database():
             url TEXT NOT NULL,
             created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
             updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(package_id, url),
             FOREIGN KEY (package_id) REFERENCES packages(id)
         )
     ''')
@@ -68,6 +69,36 @@ def initialize_database():
     ''')
     conn.commit()
     conn.close()
+
+def store_package(package_name):
+    """
+    Insert a package into the packages table (if it doesn't already exist)
+    and return its ID.
+    """
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("INSERT OR IGNORE INTO packages (name) VALUES (?)", (package_name,))
+    conn.commit()
+    cursor.execute("SELECT id FROM packages WHERE name = ?", (package_name,))
+    pkg_id = cursor.fetchone()[0]
+    conn.close()
+    logger.info(f"Stored/Retrieved package '{package_name}' with id: {pkg_id}")
+    return pkg_id
+
+def store_doc_url(package_id, url):
+    """
+    Insert a documentation URL into the documentation_urls table (if it doesn't exist)
+    and return its ID.
+    """
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("INSERT OR IGNORE INTO documentation_urls (package_id, url) VALUES (?, ?)", (package_id, url))
+    conn.commit()
+    cursor.execute("SELECT id FROM documentation_urls WHERE package_id = ? AND url = ?", (package_id, url))
+    doc_url_id = cursor.fetchone()[0]
+    conn.close()
+    logger.info(f"Stored/Retrieved documentation URL '{url}' with id: {doc_url_id} for package id: {package_id}")
+    return doc_url_id
 
 def store_page_version(doc_url_db_id, page_url, content):
     """
