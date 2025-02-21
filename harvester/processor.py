@@ -13,6 +13,7 @@ from .logger import setup_logger
 from .config import config
 
 nltk.download('punkt', quiet=True)
+nltk.download('punkt_tab', quiet=True)
 
 logger = setup_logger(__name__)
 
