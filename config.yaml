@@ -1,0 +1,20 @@
+logging:
+  level: INFO
+  format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+database:
+  path: "documentation.db"
+
+crawler:
+  user_agent: "DocumentationHarvesterBot/1.0 (+https://yourdomain.com/info)"
+  max_depth: 1
+  max_pages: 10
+  request_delay: 1
+
+packages:
+  source: "pypi"
+  top_packages_url: "https://hugovk.github.io/top-pypi-packages/top-pypi-packages-30-days.json"
+  top_n: 20
+
+scheduler:
+  interval_minutes: 60
