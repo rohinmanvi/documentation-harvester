@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Documentation Harvester automatically tracks popular packages (currently from PyPI), retrieves their documentation URLs, crawls the linked pages (while respecting robots.txt), processes and deduplicates the content, and stores version-controlled documentation in an SQLite database. This pipeline is designed for periodic execution and easy extension to support other languages and data sources.
+The Documentation Harvester automatically tracks popular packages (currently from PyPI), retrieves their documentation URLs, crawls the linked pages (while respecting robots.txt), processes and deduplicates the content, and stores version-controlled documentation in an SQLite database. This pipeline is designed for easy extension to support other languages and data sources.
 
 ## Usage
 
