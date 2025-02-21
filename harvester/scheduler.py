@@ -3,13 +3,8 @@ import time
 from .logger import setup_logger
 from .package_retriever import get_top_packages, get_package_documentation_urls
 from .crawler import crawl_url
-from .processor import (
-    initialize_database, 
-    store_package, 
-    store_doc_url, 
-    store_page_version, 
-    process_and_store_docs
-)
+from .db import initialize_database, store_package, store_doc_url, store_page_version
+from .doc_processor import process_and_store_docs
 from .config import config
 
 logger = setup_logger(__name__)
