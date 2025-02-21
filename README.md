@@ -1,74 +1,73 @@
+Below is a revised, concise README that meets your requirements:
+
+---
+
+```markdown
 # Documentation Harvester
 
-A robust system to automatically harvest documentation from popular programming packages and libraries to create and maintain a dataset for AI training. The system retrieves documentation URLs, crawls pages (while respecting robots.txt), processes and deduplicates the content, and stores version-controlled documentation in an SQLite database.
+## Overview
 
-## Features
+The Documentation Harvester automatically tracks popular packages (currently from PyPI), retrieves their documentation URLs, crawls the linked pages (while respecting robots.txt), processes and deduplicates the content, and stores version-controlled documentation in an SQLite database. This pipeline is designed for periodic execution and easy extension to support other languages and data sources.
 
-- **Identify and Track Packages:** Retrieve popular packages from sources (currently PyPI; extendable to other languages).
-- **Documentation Retrieval:** Crawl documentation pages while respecting source websites' terms via dedicated robots.txt parsing.
-- **Version Control:** Store and version-control documentation changes.
-- **Content Processing:** Preprocess, clean, and deduplicate documentation content.
-- **Configurable Scheduling:** Run harvesting tasks periodically (or on-demand).
-- **Enhanced Logging:** Detailed logging with configurable log levels.
-- **Centralized Configuration:** Easily tune settings via a YAML configuration file.
+## Usage
 
-## Repository Structure
+### One-Time Run
 
-```
-documentation-harvester/
-├── README.md
-├── LICENSE
-├── requirements.txt
-├── config.yaml
-├── harvester/
-│   ├── __init__.py
-│   ├── config.py
-│   ├── logger.py
-│   ├── package_retriever.py
-│   ├── crawler.py
-│   ├── processor.py
-│   └── scheduler.py
-└── scripts/
-    ├── run_once.py
-    └── run_scheduler.py
+To run the harvester once:
+
+```bash
+python scripts/run_once.py
 ```
 
-## Installation
+### Scheduled Execution
 
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/yourusername/documentation-harvester.git
-   cd documentation-harvester
-   ```
+To run the harvester periodically using a built-in scheduler:
 
-2. **Install Dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+```bash
+python scripts/run_scheduler.py
+```
 
-## Configuration
-
-Edit the `config.yaml` file to adjust API endpoints, crawl settings, logging levels, scheduling intervals, and database paths.
-
-## Running the Harvester
-
-- **Run Once (one-time execution):**
-  ```bash
-  python scripts/run_once.py
-  ```
-
-- **Run Scheduler (periodic execution):**
-  ```bash
-  python scripts/run_scheduler.py
-  ```
-
-## Using in Google Colab
-
-In a Colab notebook, run the following commands to clone and run the repository:
+In Google Colab, clone and run as follows:
 
 ```python
-!git clone https://github.com/rohinmanvi/documentation-harvester.git
+!git clone https://github.com/yourusername/documentation-harvester.git
 %cd documentation-harvester
 !pip install -r requirements.txt
-!python scripts/run_once.py  # or use run_scheduler.py for periodic execution
+!python scripts/run_once.py  # or run_scheduler.py for periodic harvesting
 ```
+
+## Database Schema
+
+The system uses an SQLite database (`documentation.db`) with the following tables:
+
+- **packages**  
+  Stores package names (unique per package).
+
+- **documentation_urls**  
+  Maps each package to one or more documentation URLs (unique per package/URL pair).
+
+- **page_versions**  
+  Stores crawled pages (with versioning) by associating each page with a documentation URL. A SHA1 hash is computed for each page to store only new versions when content changes.
+
+- **processed_docs**  
+  Contains processed and deduplicated text extracted from page versions.
+
+## Potential Improvements
+
+- **Extended Language Support:**  
+  Add new package retrieval modules for other ecosystems (e.g., npm, RubyGems).
+
+- **Enhanced Crawling:**  
+  Use asynchronous HTTP requests for faster crawling and improved error handling.
+
+- **Robust Scheduling:**  
+  Integrate with more advanced schedulers (e.g., Airflow, APScheduler) for production-level orchestration.
+
+- **Improved Quality Assessment:**  
+  Refine text extraction, quality filters, and deduplication strategies.
+
+- **Monitoring & Alerting:**  
+  Implement real-time logging aggregation, performance metrics, and error notifications.
+
+- **Scalable Storage:**  
+  Consider migrating from SQLite to PostgreSQL or another robust database solution for large-scale deployments.

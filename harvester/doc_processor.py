@@ -5,6 +5,7 @@ from .config import config
 from .text_processing import extract_text_from_html, gopher_quality_filter, minhash_deduplication
 import nltk
 nltk.download('punkt', quiet=True)
+nltk.download('punkt_tab', quiet=True)
 
 logger = setup_logger(__name__)
 DB_PATH = config.get('database', {}).get('path', 'documentation.db')
